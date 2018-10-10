@@ -1,0 +1,50 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"></head><body contenteditable="false">Hour<br>
+<input id="x" type="text"><br>
+Minute<br>
+<input id="y" type="text"><br>
+Level<br>
+<input id="z" type="text"><br><br>
+result: <br><br>
+
+
+<button onclick="genON()">Get ON Code</button>
+<br>
+<textarea id="ONresult" style="width:350px;height:40px;" placeholder="On code will appear here"></textarea>
+
+<br><br>
+
+<button onclick="genOFF()">Get OFF Code</button>
+<br>
+<textarea id="OFFresult" style="width:350px;height:40px;" placeholder="Off code will appear here"></textarea>
+
+<script>
+function genON() {
+  var x = document.getElementById("x").value;
+  var y = document.getElementById("y").value;
+  var z = document.getElementById("z").value;
+  var oncode = "|| t.hour == "+z+"OnH"+x+y+" && t.min == "+z+"OnM"+x+y;
+  document.getElementById("ONresult").innerHTML = oncode;
+
+var oncopyText = document.getElementById("ONresult");
+  oncopyText.select();
+  document.execCommand("copy");
+  alert("Copied the text: " + oncopyText.value);
+}
+
+function genOFF() {
+  var x = document.getElementById("x").value;
+  var y = document.getElementById("y").value;
+  var z = document.getElementById("z").value;
+  var offcode = "|| t.hour == "+z+"OffH"+x+y+" && t.min == "+z+"OffM"+x+y;
+  document.getElementById("OFFresult").innerHTML = offcode;
+
+var offcopyText = document.getElementById("OFFresult");
+  offcopyText.select();
+  document.execCommand("copy");
+  alert("Copied the text: " + offcopyText.value);
+}
+
+
+
+</script></body></html>
