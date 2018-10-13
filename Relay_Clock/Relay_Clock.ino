@@ -4,30 +4,30 @@
 //https://www.w3schools.com/code/tryit.asp?filename=FVYAW7WY04J9
 
 #include <DS3231.h>
-int Relay = 13;
+int Relay = 8;
 DS3231  rtc(SDA, SCL);
 Time t;
 //
-//TESTER 1 BURST MORNING
-//const int OnH0725 = 2;
-//const int OnM0725 = 41;
-//const int OffH0725 = 2;
-//const int OffM0725 = 41;
+////TESTER 1 BURST MORNING
+//const int OnH0725 = 23;
+//const int OnM0725 = 35;
+//const int OffH0725 = 23;
+//const int OffM0725 = 35;
 ////TESTER 2 BLEEP
-//const int AOnH0740 = 11;
-//const int AOnM0740 = 12;
-//const int AOffH0740 = 11;
-//const int AOffM0740 = 12;
+//const int AOnH0740 = 23;
+//const int AOnM0740 = 36;
+//const int AOffH0740 = 23;
+//const int AOffM0740 = 36;
 ////TESTER 1 BLEEP
-//const int POnH0820 = 00;
-//const int POnM0820 = 34;
-//const int POffH0820 = 00;
-//const int POffM0820 = 34;
+//const int POnH0820 = 23;
+//const int POnM0820 = 37;
+//const int POffH0820 = 23;
+//const int POffM0820 = 37;
 ////TESTER 1 BURST GO HOME
-//const int AOnH1520 = 00;
-//const int AOnM1520 = 35;
-//const int AOffH1520 = 00;
-//const int AOffM1520 = 35;
+//const int AOnH1520 = 23;
+//const int AOnM1520 = 38;
+//const int AOffH1520 = 23;
+//const int AOffM1520 = 38;
 //--------------------------------
 
 //Constant Seconds
@@ -39,7 +39,6 @@ const int OnH0725 = 7;
 const int OnM0725 = 25;
 const int OffH0725 = 7;
 const int OffM0725 = 25;
-
 //07:40
 const int AOnH0740 = 7;
 const int AOnM0740 = 40;
@@ -173,6 +172,7 @@ const int AOnH1440 = 14;
 const int AOnM1440 = 40;
 const int AOffH1440 = 14;
 const int AOffM1440 = 40;
+
 //15:20
 const int AOnH1520 = 15;
 const int AOnM1520 = 20;
@@ -209,105 +209,121 @@ void loop() {
   Serial.println("  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -");
   delay (1000);
 
-  //MORNING
-  if ((t.hour == OnH0725 && t.min == OnM0725) && t.sec == OnSec) {
-    digitalWrite(Relay, LOW);
-    Serial.println("LIGHT ON");
-  } else if (t.hour == OffH0725 && t.min == OffM0725 && t.sec == OffSec) {
+
+
+  if (t.dow == 6 || t.dow == 7) {
     digitalWrite(Relay, HIGH);
     Serial.println("LIGHT Off");
-  }
+  } else {
+
+    //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-  //GENERAL HOURS
-  if (t.sec == OnSec) {
-    if (t.hour == POnH0820 && t.min == POnM0820
-       || t.hour == POnH0900 && t.min == POnM0900
-       || t.hour == POnH0930 && t.min == POnM0930
-       || t.hour == POnH0940 && t.min == POnM0940
-       || t.hour == POnH1010 && t.min == POnM1010
-       || t.hour == POnH1045 && t.min == POnM1045
-       || t.hour == POnH1050 && t.min == POnM1050
-       || t.hour == POnH1130 && t.min == POnM1130
-       || t.hour == POnH1210 && t.min == POnM1210
-       || t.hour == POnH1250 && t.min == POnM1250
-       || t.hour == POnH1320 && t.min == POnM1320
-       || t.hour == POnH1400 && t.min == POnM1400
-  
-    ) {
+    //MORNING
+    if ((t.hour == OnH0725 && t.min == OnM0725) && t.sec == OnSec) {
       digitalWrite(Relay, LOW);
       Serial.println("LIGHT ON");
-      delay (1500);
-      digitalWrite(Relay, HIGH);
-      Serial.println("LIGHT Off");
-      
-    } else if (t.hour == AOnH0740 && t.min == AOnM0740
-       || t.hour == AOnH0825 && t.min == AOnM0825
-       || t.hour == AOnH0910 && t.min == AOnM0910
-       || t.hour == AOnH0955 && t.min == AOnM0955
-       || t.hour == AOnH1040 && t.min == AOnM1040
-       || t.hour == AOnH1110 && t.min == AOnM1110
-       || t.hour == AOnH1155 && t.min == AOnM1155
-       || t.hour == AOnH1215 && t.min == AOnM1215
-       || t.hour == AOnH1240 && t.min == AOnM1240
-       || t.hour == AOnH1300 && t.min == AOnM1300
-       || t.hour == AOnH1325 && t.min == AOnM1325
-       || t.hour == AOnH1350 && t.min == AOnM1350
-       || t.hour == AOnH1435 && t.min == AOnM1435
-      
-    ) {
-      digitalWrite(Relay, LOW);
-      Serial.println("LIGHT ON");
-      delay (1500);
-      digitalWrite(Relay, HIGH);
-      Serial.println("LIGHT Off");
-      delay (1500);
-      digitalWrite(Relay, LOW);
-      Serial.println("LIGHT ON");
-      delay (1500);
+    } else if (t.hour == OffH0725 && t.min == OffM0725 && t.sec == OffSec) {
       digitalWrite(Relay, HIGH);
       Serial.println("LIGHT Off");
     }
-  } else if ((t.hour == AOffH0740 && t.min == AOffM0740
-       || t.hour == POffH0820 && t.min == POffM0820
-       || t.hour == AOffH0825 && t.min == AOffM0825
-       || t.hour == POffH0900 && t.min == POffM0900
-       || t.hour == AOffH0910 && t.min == AOffM0910
-       || t.hour == POffH0930 && t.min == POffM0930
-       || t.hour == POffH0940 && t.min == POffM0940
-       || t.hour == AOffH0955 && t.min == AOffM0955
-       || t.hour == POffH1010 && t.min == POffM1010
-       || t.hour == AOffH1040 && t.min == AOffM1040
-       || t.hour == POffH1045 && t.min == POffM1045
-       || t.hour == POffH1050 && t.min == POffM1050
-       || t.hour == AOffH1110 && t.min == AOffM1110
-       || t.hour == POffH1130 && t.min == POffM1130
-       || t.hour == AOffH1155 && t.min == AOffM1155
-       || t.hour == POffH1210 && t.min == POffM1210
-       || t.hour == AOffH1215 && t.min == AOffM1215
-       || t.hour == AOffH1240 && t.min == AOffM1240
-       || t.hour == POffH1250 && t.min == POffM1250
-       || t.hour == AOffH1300 && t.min == AOffM1300
-       || t.hour == POffH1320 && t.min == POffM1320
-       || t.hour == AOffH1325 && t.min == AOffM1325
-       || t.hour == AOffH1350 && t.min == AOffM1350
-       || t.hour == POffH1400 && t.min == POffM1400
-       || t.hour == AOffH1435 && t.min == AOffM1435
-              ) && t.sec == OffSec) {
 
+
+    //GENERAL HOURS
+    if (t.sec == OnSec) {
+      if (t.hour == POnH0820 && t.min == POnM0820
+          || t.hour == POnH0900 && t.min == POnM0900
+          || t.hour == POnH0930 && t.min == POnM0930
+          || t.hour == POnH0940 && t.min == POnM0940
+          || t.hour == POnH1010 && t.min == POnM1010
+          || t.hour == POnH1045 && t.min == POnM1045
+          || t.hour == POnH1050 && t.min == POnM1050
+          || t.hour == POnH1130 && t.min == POnM1130
+          || t.hour == POnH1210 && t.min == POnM1210
+          || t.hour == POnH1250 && t.min == POnM1250
+          || t.hour == POnH1320 && t.min == POnM1320
+          || t.hour == POnH1400 && t.min == POnM1400
+
+         ) {
+        digitalWrite(Relay, LOW);
+        Serial.println("LIGHT ON");
+        delay (1500);
+        digitalWrite(Relay, HIGH);
+        Serial.println("LIGHT Off");
+
+      } else if (t.hour == AOnH0740 && t.min == AOnM0740
+                 || t.hour == AOnH0825 && t.min == AOnM0825
+                 || t.hour == AOnH0910 && t.min == AOnM0910
+                 || t.hour == AOnH0955 && t.min == AOnM0955
+                 || t.hour == AOnH1040 && t.min == AOnM1040
+                 || t.hour == AOnH1110 && t.min == AOnM1110
+                 || t.hour == AOnH1155 && t.min == AOnM1155
+                 || t.hour == AOnH1215 && t.min == AOnM1215
+                 || t.hour == AOnH1240 && t.min == AOnM1240
+                 || t.hour == AOnH1300 && t.min == AOnM1300
+                 || t.hour == AOnH1325 && t.min == AOnM1325
+                 || t.hour == AOnH1350 && t.min == AOnM1350
+                 || t.hour == AOnH1435 && t.min == AOnM1435
+
+                ) {
+        digitalWrite(Relay, LOW);
+        Serial.println("LIGHT ON");
+        delay (1500);
+        digitalWrite(Relay, HIGH);
+        Serial.println("LIGHT Off");
+        delay (1500);
+        digitalWrite(Relay, LOW);
+        Serial.println("LIGHT ON");
+        delay (1500);
+        digitalWrite(Relay, HIGH);
+        Serial.println("LIGHT Off");
+      }
+    } else if ((t.hour == AOffH0740 && t.min == AOffM0740
+                || t.hour == POffH0820 && t.min == POffM0820
+                || t.hour == AOffH0825 && t.min == AOffM0825
+                || t.hour == POffH0900 && t.min == POffM0900
+                || t.hour == AOffH0910 && t.min == AOffM0910
+                || t.hour == POffH0930 && t.min == POffM0930
+                || t.hour == POffH0940 && t.min == POffM0940
+                || t.hour == AOffH0955 && t.min == AOffM0955
+                || t.hour == POffH1010 && t.min == POffM1010
+                || t.hour == AOffH1040 && t.min == AOffM1040
+                || t.hour == POffH1045 && t.min == POffM1045
+                || t.hour == POffH1050 && t.min == POffM1050
+                || t.hour == AOffH1110 && t.min == AOffM1110
+                || t.hour == POffH1130 && t.min == POffM1130
+                || t.hour == AOffH1155 && t.min == AOffM1155
+                || t.hour == POffH1210 && t.min == POffM1210
+                || t.hour == AOffH1215 && t.min == AOffM1215
+                || t.hour == AOffH1240 && t.min == AOffM1240
+                || t.hour == POffH1250 && t.min == POffM1250
+                || t.hour == AOffH1300 && t.min == AOffM1300
+                || t.hour == POffH1320 && t.min == POffM1320
+                || t.hour == AOffH1325 && t.min == AOffM1325
+                || t.hour == AOffH1350 && t.min == AOffM1350
+                || t.hour == POffH1400 && t.min == POffM1400
+                || t.hour == AOffH1435 && t.min == AOffM1435
+               ) && t.sec == OffSec) {
+
+    }
+
+
+    //GO HOME
+    if (( t.hour == AOnH1440 && t.min == AOnM1440
+          || t.hour == AOnH1520 && t.min == AOnM1520
+        ) && t.sec == OnSec) {
+      digitalWrite(Relay, LOW);
+      Serial.println("LIGHT ON");
+    } else if ((t.hour == AOffH1440 && t.min == AOffM1440
+                || t.hour == AOffH1520 && t.min == AOffM1520
+               ) && t.sec == OffSec) {
+      digitalWrite(Relay, HIGH);
+      Serial.println("LIGHT Off");
+    }
   }
 
-
-  //GO HOME
-  if (( t.hour == AOnH1440 && t.min == AOnM1440
-       || t.hour == AOnH1520 && t.min == AOnM1520
-     ) && t.sec == OnSec) {
-    digitalWrite(Relay, LOW);
-    Serial.println("LIGHT ON");
-  } else if ((t.hour == AOffH1440 && t.min == AOffM1440
-             || t.hour == AOffH1520 && t.min == AOffM1520
-            ) && t.sec == OffSec) {
-    digitalWrite(Relay, HIGH);
-    Serial.println("LIGHT Off");
-  }
+  //-----------------------------------------------------------------------------------------------------------------------------------------------------
 }
+
+
+
